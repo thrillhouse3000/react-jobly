@@ -14,6 +14,7 @@ const SignupForm = ({signup}) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const [formErrors, setFormErrors] = useState([])
 
     const handleChange = evt => {
         const {name, value} = evt.target;
@@ -23,11 +24,16 @@ const SignupForm = ({signup}) => {
         }))
     }
 
-    const handleSubmit = evt => {
+    const handleSubmit = async evt => {
         evt.preventDefault();
-        signup(formData.username, formData.password, formData.firstName, formData.lastName, formData.email)
-        setFormData(INITIAL_STATE);
-        setTimeout(() => {navigate('/')}, 50)
+        try {
+            await signup(formData.username, formData.password, formData.firstName, formData.lastName, formData.email)
+            setFormData(INITIAL_STATE);
+            setTimeout(() => {navigate('/')}, 50)
+        }catch (err) {
+            setFormErrors(err)
+        }
+        
     }
 
     return (
@@ -86,6 +92,13 @@ const SignupForm = ({signup}) => {
                 </div>
                 <button type="submit" className="mt-3 btn btn-success">Sign Up</button>
             </form>
+            <div>
+                {formErrors.length ? 
+                    formErrors.map(err => (
+                        <p key={err} style={{color: 'red', marginTop: '1rem'}}>{err}</p>
+                    )) : null         
+                }
+            </div>
         </div>
     )
 }

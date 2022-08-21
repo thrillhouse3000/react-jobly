@@ -18,7 +18,6 @@ const JobCard = ({id, title, salary, equity}) => {
                     <div className="row">
                         <div className="col-8">
                             <CardTitle className="fs-5 fw-bold" style={{textShadow: '1.6px 1.6px 3px rgba(0,0,0,0.3'}}>{title}</CardTitle>
-                            <CardText>ID: {id}</CardText>
                             <CardText>Salary: {salary}</CardText>
                             <CardText>Equity: {equity}</CardText>
                         </div>

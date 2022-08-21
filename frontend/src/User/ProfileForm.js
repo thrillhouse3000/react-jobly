@@ -6,14 +6,16 @@ import "./ProfileForm.css"
 const ProfileForm = () => {
     const currUser = JSON.parse(localStorage.getItem('currUser'))
     const {setCurrUser} = useContext(AuthContext)
-
-    const [formData, setFormData] = useState({
+    const INITIAL_STATE = {
         username: currUser.username,
         firstName: currUser.firstName,
         lastName: currUser.lastName,
         email: currUser.email,
         applications: currUser.applications
-    });
+    }
+
+    const [formErrors, setFormErrors] = useState([])
+    const [formData, setFormData] = useState(INITIAL_STATE);
 
     const handleChange = evt => {
         const {name, value} = evt.target;
@@ -36,12 +38,12 @@ const ProfileForm = () => {
         try {
             updatedUser = await JoblyApi.updateUser(username, updatedData)
             updatedUser.applications = formData.applications
+            setFormData(formData => ({...formData}))
+            setCurrUser(JSON.stringify(updatedUser))
         }catch (err) {
-            console.log(err)
+            setFormErrors(err)
+            setFormData(INITIAL_STATE)
         }
-        
-        setFormData(formData => ({...formData}))
-        setCurrUser(JSON.stringify(updatedUser))
     }
 
     return (
@@ -83,6 +85,13 @@ const ProfileForm = () => {
                 </div>
                 <button type="submit" className="btn btn-primary mt-3">Edit Profile</button>
             </form>
+            <div>
+                {formErrors.length ? 
+                    formErrors.map(err => (
+                        <p key={err} style={{color: 'red', marginTop: '1rem'}}>{err}</p>
+                    )) : null         
+                }
+            </div>
         </div>
     )
 }

@@ -31,9 +31,11 @@ const Jobs = () => {
                 </div>
                 <div className="col">
                     <h3 className="text-decoration-underline">Jobs</h3>
-                    {jobs.map(j => (
-                        <JobCard key={j.id} id={j.id} title={j.title} salary={j.salary} equity={j.equity} />
-                    ))}   
+                    {jobs.length ?
+                        jobs.map(j => (
+                            <JobCard key={j.id} id={j.id} title={j.title} salary={j.salary} equity={j.equity} />
+                        )) : <p>Couldn't find anything matching that criteria</p>
+                    }   
                 </div>
             </div>
             

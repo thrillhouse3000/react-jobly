@@ -10,8 +10,13 @@ const Companies = () => {
 
     useEffect(() => {
         const fetchCompanies = async () => {
-            let companies = await JoblyApi.getCompanies(params);
-            setCompanies(companies);
+            try {
+                let companies = await JoblyApi.getCompanies(params);
+                setCompanies(companies)
+            } catch (err) {
+                return err
+            }
+            
         }
         fetchCompanies();
     }, [params])
@@ -31,9 +36,17 @@ const Companies = () => {
                 </div>
                 <div className="col">
                     <h3 className="text-decoration-underline">Companies</h3>
-                    {companies.map(c => (
-                        <CompanyCard key={c.handle} handle={c.handle} name={c.name} description={c.description} numEmployees={c.numEmployees} />
-                    ))}
+                    {companies.length ? 
+                        companies.map(c => (
+                            <CompanyCard 
+                                key={c.handle} 
+                                handle={c.handle} 
+                                name={c.name} 
+                                description={c.description} 
+                                numEmployees={c.numEmployees} 
+                            />
+                        )) : <p>Couldn't find anything matching that criteria.</p>
+                    }
                 </div>
             </div>
             
