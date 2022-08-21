@@ -1,53 +1,58 @@
 version: "3.8"
 
 services:
-  db:
-    image: postgres:12
-    restart: always
-    ports:
-      - "5432:5432"
-    volumes:
-      - db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: secret
-      POSTGRES_DB: jobly
-    # healthcheck:
-    #   test: curl --fail -s http://localhost:5432/ || exit 1
-    #   interval: 1m30s
-    #   timeout: 10s
-    #   retries: 3
-  frontend:
-    build:
-      dockerfile: Dockerfile
-      context: ./frontend
-    ports:
-      - "3000:3000"
-    working_dir: /frontend
-    volumes:
-      - /frontend/node_modules
-      - ./frontend:/frontend
+  
+  frontend: 
+    build: ./frontend 
+    ports: 
+      - "3000:3000" 
+    container_name: frontend-docker
+    restart: always 
+ 
+
   backend:
-    build:
-      dockerfile: Dockerfile
-      context: ./backend
+    build: ./backend
     depends_on:
-      - db
+      - postgres
     ports:
       - "3001:3001"
-    volumes:
-      - /backend/node_modules
-      - ./backend:/backend
     environment:
-      NODE_ENV: development
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: user
-      DB_PASSWORD: secret
-      DB_NAME: jobly
-    links:
-      - db
+      - NODE_ENV=production
+      - EXTERNAL_PORT=3001
+      - PGUSER=root
+      - PGPASSWORD=root
+      - PGDATABASE=jobly
+      - PGHOST=postgres
+    container_name: backend-docker
+    restart: always
+    networks: 
+      - backend
+    volumes:
+      - ./docker-seed/docker-seed.sql:/docker-entrypoint-initdb.d/docker-seed.sql
+ 
+  postgres:
+    image: postgres:12
+    ports:
+    - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root 
+      - POSTGRES_DB=jobly
+    container_name: postgres-docker
+    volumes:
+      - jobly-data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - backend
+    deploy:
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          - "node.role===manager"
 
+networks:
+  backend:
 
 volumes:
-  db:
+  jobly-data:
+  docker-seed:
