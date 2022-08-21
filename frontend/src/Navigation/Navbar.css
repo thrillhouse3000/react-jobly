@@ -1,0 +1,8 @@
+.Navbar {
+    background-color: rgb(124, 189, 255);
+    font-size: larger;
+}
+
+.Navbar a:hover {
+    color: white;
+}

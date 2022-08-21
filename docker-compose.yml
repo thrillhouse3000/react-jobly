@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:12
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: jobly
+    # healthcheck:
+    #   test: curl --fail -s http://localhost:5432/ || exit 1
+    #   interval: 1m30s
+    #   timeout: 10s
+    #   retries: 3
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    working_dir: /frontend
+    volumes:
+      - /frontend/node_modules
+      - ./frontend:/frontend
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    volumes:
+      - /backend/node_modules
+      - ./backend:/backend
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: user
+      DB_PASSWORD: secret
+      DB_NAME: jobly
+    links:
+      - db
+
+
+volumes:
+  db:
