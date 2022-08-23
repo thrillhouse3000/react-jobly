@@ -26,11 +26,15 @@
 - Subsequent times: `docker compose up`
 - runs on localhost:3000
 
+# Deployed
+
+- See it deployed at ` thrillhouse3000-jobly.surge.sh`
+
 # What Is Jobly
 
 - Jobly is a full-stack web application implementing a React//Express//PostgreSQL stack.
 - Jobly allows you to browse Companies, view their details and apply for jobs.
-- Jobly uses JSON web tokens for authorization and authentication.
+- Jobly uses JSON web tokens for authorization and authentication. These are stored in localStorage.
 
 # Navigating the Site
 
