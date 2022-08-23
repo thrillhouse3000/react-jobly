@@ -4,7 +4,6 @@ const { Client } = require("pg");
 const { getDatabaseUri } = require("./config");
 
 let db;
-console.log(getDatabaseUri())
 
 if (process.env.NODE_ENV === "production") {
   db = new Client({
@@ -20,13 +19,10 @@ if (process.env.NODE_ENV === "production") {
   }); 
 }
 
-
-
 try{
   db.connect();
 } catch(err) {
   console.log(err)
 }
-
 
 module.exports = db;

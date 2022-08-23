@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import JoblyApi from "../API/api";

@@ -31,7 +31,7 @@ services:
       - ./docker-seed/docker-seed.sql:/docker-entrypoint-initdb.d/docker-seed.sql
  
   postgres:
-    image: postgres:12
+    build: ./docker-db
     ports:
     - "5432:5432"
     environment:
