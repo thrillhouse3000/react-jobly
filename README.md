@@ -3,7 +3,7 @@
 ## Git Repository
 
 ### Backend
-- Assumes functioning PostgreSQL (https://www.postgresql.org/docs/current/tutorial-install.html) 
+- [Assumes functioning PostgreSQL](https://www.postgresql.org/docs/current/tutorial-install.html) 
 - CD into /backend directory and install dependencies
 - `npm install`
 - To start the server
@@ -20,7 +20,7 @@
 
 ## Docker
 
-- Assumes functioning Docker with Docker Compose (https://docs.docker.com/get-docker/)
+- [Assumes functioning Docker with Docker Compose](https://docs.docker.com/get-docker/)
 - First time: `docker compose up --build`
 - When finished: `docker compose down`
 - Subsequent times: `docker compose up`
@@ -28,7 +28,7 @@
 
 # Deployed
 
-- See it deployed at ` thrillhouse3000-jobly.surge.sh`
+[See it deployed at](https://thrillhouse3000-jobly.surge.sh)
 
 # What Is Jobly
 
