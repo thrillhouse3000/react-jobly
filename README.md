@@ -28,7 +28,7 @@
 
 # Deployed
 
-[See it deployed at](https://thrillhouse3000-jobly.surge.sh)
+[See it deployed](https://thrillhouse3000-jobly.surge.sh)
 
 # What Is Jobly
 
